@@ -6,12 +6,14 @@ const requireAuth = (req, res, next) => {
 
   // check json web token exists & is verified
   if (token) {
-    jwt.verify(token, 'net ninja secret', (err, decodedToken) => {
+    jwt.verify(token, 'net ninja secret', async (err, decodedToken) => {
       if (err) {
         console.log(err.message);
         res.redirect('/login');
       } else {
-        console.log(decodedToken);
+        let user = await User.findById(decodedToken.id);
+        req.user = user;
+        //console.log(decodedToken);
         next();
       }
     });
@@ -30,6 +32,11 @@ const checkUser = (req, res, next) => {
         next();
       } else {
         let user = await User.findById(decodedToken.id);
+        if (user == null)
+          {
+              res.redirect("/"); 
+              return; 
+          }
         res.locals.user = user;
         next();
       }

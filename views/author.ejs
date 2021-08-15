@@ -8,29 +8,10 @@
 </head>
 <body>
   <div class="container">
-    <h1 class="mb-4">Blog article</h1>
-    <div class="row g-1">
-      <div class="col-md-4">
-        <% if (user) { %>
-          <p>Welcome, <%= user.name %></p>
-          <a href="/logout" class="btn btn-success">logout</a>
-        <% } else { %>
-          <a href="/signup" class="btn btn-success">signup</a>
-        <a href="/login" class="btn btn-success">signin</a>
-        <% } %>
-      </div>
-      <div class="col-md-4">
-        <a href="/article/new" class="btn btn-success">New Article</a>
-        
-      </div>
-    </div>
-
-    <br><br>
+    <h1 class="mb-4"><%= user.name %></h1>
     
+    <a href="/article/new" class="btn btn-success">New Article</a>
 
-
-    
-    
     <% article.forEach(article => { %>
       <div class="card mb-3" style="max-width: 540px;">
         <div class="row g-0">

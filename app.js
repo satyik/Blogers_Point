@@ -6,7 +6,9 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const { requireAuth, checkUser } = require('./middleware/authMiddleware');
 const authRoutes = require('./routes/authRoutes');
-
+const articleRoutes = require('./routes/articleRoutes');
+const userRoutes = require('./routes/userRoutes');
+const index = require('./routes/index');
 const app = express();
 
 // view engine setup
@@ -28,8 +30,11 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCr
 
 //app.use('/', indexRouter);
 app.get('*', checkUser);
-app.get('/', (req, res) => res.render('home'));
-app.get('/smoothies', requireAuth, (req, res) => res.render('smoothies'));
+
+app.get('/',index);
+app.get('/smoothies', requireAuth, (req, res) => res.render('new'));
+app.use('/article', requireAuth, articleRoutes);
+app.use('/user', requireAuth,userRoutes);
 app.use(authRoutes);
 
 
